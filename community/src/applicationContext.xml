@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 引入外部属性文件 -->
+	<context:property-placeholder location="classpath:db.properties"/>
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="user" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+			 	<!-- 用户表的映射文件 -->
+				<value>com/community/mapper/User.hbm.xml</value>
+				<!-- 公告的映射文件 -->
+				<value>com/community/mapper/Placard.hbm.xml</value>
+				<!-- 保修的映射文件 -->
+				<value>com/community/mapper/Repair.hbm.xml</value>
+				<!-- 测试表的映射文件 -->
+				<value>com/community/mapper/Test.hbm.xml</value>
+				<!-- 保修图片的映射文件 -->
+				<value>com/community/mapper/RepairPhoto.hbm.xml</value>
+				<!-- 发表说说的映射文件 -->
+				<value>com/community/mapper/SS.hbm.xml</value>
+				<!-- 说说图片的映射文件 -->
+				<value>com/community/mapper/SSImg.hbm.xml</value>
+				<!-- 商品信息的映射文件 -->
+				<value>com/community/mapper/Product.hbm.xml</value>
+				<!-- 购物车信息的映射文件 -->
+				<value>com/community/mapper/Cart.hbm.xml</value>
+				<!-- 购物车条目的映射文件 -->
+				<value>com/community/mapper/CartItem.hbm.xml</value>
+				<!-- 房屋信息的映射文件 -->
+				<value>com/community/mapper/House.hbm.xml</value>
+				<!--  房屋图片的映射文件 -->
+				<value>com/community/mapper/HouseImg.hbm.xml</value>
+				<!--  收货地址的映射文件-->
+				<value>com/community/mapper/Address.hbm.xml</value>
+				<!--  我的收藏的映射文件-->
+				<value>com/community/mapper/Favorite.hbm.xml</value>
+				<!--  我的收藏子项的映射文件-->
+				<value>com/community/mapper/FavoriteItem.hbm.xml</value>
+				<!--  我的余额的映射文件-->
+				<value>com/community/mapper/Wallet.hbm.xml</value>
+				<!--  充值记录的映射文件-->
+				<value>com/community/mapper/History.hbm.xml</value>
+				<!--  充值记录的映射文件-->
+				<value>com/community/mapper/UserHeadImg.hbm.xml</value>
+				<!--  订单映射文件-->
+				<value>com/community/mapper/Order.hbm.xml</value>
+				<!--  订单子项的映射文件-->
+				<value>com/community/mapper/OrderItem.hbm.xml</value>
+				<!--  积分的映射文件-->
+				<value>com/community/mapper/Score.hbm.xml</value>
+				<!--  认证的映射文件-->
+				<value>com/community/mapper/Auth.hbm.xml</value>
+				<!--  缴费订单的映射文件-->
+				<value>com/community/mapper/Pay.hbm.xml</value>
+				<!--  缴费订单子项的映射文件-->
+				<value>com/community/mapper/PayItem.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 用户模块 -->
+	<bean id="userDao" class="com.community.dao.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="userService" class="com.community.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao"/>
+	</bean>
+	<bean id="userAction" class="com.community.web.UserAction">
+		<property name="userService" ref="userService"/>
+		<property name="authService" ref="authService"/>
+	</bean>
+	
+	<!-- 信息公告模块 -->
+	<bean id="placardDao" class="com.community.dao.PlacardDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="placardService" class="com.community.service.impl.PlacardServiceImpl">
+		<property name="placardDao" ref="placardDao"/>
+	</bean>
+	<bean id="placardAction" class="com.community.web.PlacardAction">
+		<property name="placardService" ref="placardService"/>
+	</bean>
+	
+	<!-- 报事修理模块 -->
+	
+	<bean id="repairDao" class="com.community.dao.RepairDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="repairService" class="com.community.service.impl.RepairServiceImpl">
+		<property name="repairDao" ref="repairDao"></property>
+	</bean>
+	
+	<bean id="repairAction" class="com.community.web.RepairAction">
+		<property name="repairService" ref="repairService"/>
+		<property name="photoService" ref="photoService"/>
+		<property name="authService" ref="authService"/>
+	</bean>
+	
+	<!-- 图片保存 -->
+	<bean id="photoDao" class="com.community.dao.PhotoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="photoService" class="com.community.service.impl.PhotoServiceImpl">
+		<property name="photoDao" ref="photoDao"/>
+	</bean>
+	
+	<!-- 说说模块  -->
+	
+	<bean id="ssDao" class="com.community.dao.SSDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="ssService" class="com.community.service.impl.SSServiceImpl">
+		<property name="ssDao" ref="ssDao"></property>
+	</bean>
+	<!-- 发表说说的图片 -->
+	<bean id="ssImgDao" class="com.community.dao.SSImgDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="ssImgService" class="com.community.service.impl.SSImgServiceImpl">
+		<property name="ssImgDao" ref="ssImgDao"/>
+	</bean>
+	
+	<bean id="ssAction" class="com.community.web.SSAction">
+		<property name="ssService" ref="ssService"></property>
+		<property name="ssImgService" ref="ssImgService"></property>
+	</bean>
+	
+	
+	<!--商品信息  -->
+	<bean id="productDao" class="com.community.dao.ProductDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="productService" class="com.community.service.impl.ProductServiceImpl">
+		<property name="productDao" ref="productDao"></property>
+	</bean>
+	<bean id="productAction" class="com.community.web.ProductAction">
+		<property name="productService" ref="productService"></property>
+	</bean>
+	
+	<!-- 购物车模块  -->
+	<bean id="cartDao" class="com.community.dao.CartDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="cartService" class="com.community.service.impl.CartServiceImpl">
+		<property name="cartDao" ref="cartDao"></property>
+	</bean>
+	<bean id="cartAction" class="com.community.web.CartAction">
+		<property name="cartService" ref="cartService"></property>
+		<property name="productService" ref="productService"></property>
+	</bean>
+	
+	
+	<!-- 房屋出租模块 -->
+	<bean id="houseDao" class="com.community.dao.HouseDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="houseService" class="com.community.service.impl.HouseServiceImpl">
+		<property name="houseDao" ref="houseDao"></property>
+	</bean>
+	
+	<!-- 房屋图片模块 -->
+	<bean id="houseImgDao" class="com.community.dao.HouseImgDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="houseImgService" class="com.community.service.impl.HouseImgServicveImpl">
+		<property name="houseImgDao" ref="houseImgDao"/>
+	</bean>
+	<bean id="houseAction" class="com.community.web.HouseAction">
+		<property name="houseService" ref="houseService"></property>
+		<property name="houseImgService" ref="houseImgService"></property>
+	</bean>
+	
+	<!--  收货地址模块-->
+	<bean id="addressDao" class="com.community.dao.AddressDaoIml">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="addressService" class="com.community.service.impl.AddressServiceImpl">
+		<property name="addressDao" ref="addressDao"></property>
+	</bean>
+	<bean id="addressAction" class="com.community.web.AddressAction">
+		<property name="addressService" ref="addressService"></property>
+	</bean>
+	
+	
+	<!--  用户收藏模块-->
+	<bean id="favoriteDao" class="com.community.dao.FavoriteDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="favoriteService" class="com.community.service.impl.FavoriteServiceImpl">
+		<property name="favoriteDao" ref="favoriteDao"/>
+	</bean>
+	<bean id="favoriteAction" class="com.community.web.FavoriteAction">
+		<property name="favoriteService" ref="favoriteService"></property>
+		<property name="houseService" ref="houseService"></property>
+		<property name="productService" ref="productService"></property>
+	</bean>
+	<!--  我的钱包模块-->
+	<bean id="walletDao" class="com.community.dao.WalletDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="walletService" class="com.community.service.impl.WalletServiceImpl">
+		<property name="walletDao" ref="walletDao"/>	
+	</bean>
+	<bean id="walletAction" class="com.community.web.WalletAction">
+		<property name="walletService" ref="walletService"></property>
+		<property name="historyService" ref="historyService"></property>
+	</bean>
+	
+	<!--  充值记录模块-->
+	<bean id="historyDao" class="com.community.dao.HistoryDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="historyService" class="com.community.service.impl.HistoryServiceImpl">
+		<property name="historyDao" ref="historyDao"/>
+	</bean>
+	<bean id="historyAction" class="com.community.web.HistoryAction">
+		<property name="historyService" ref="historyService"/>
+	</bean>
+	<!--  用户头像上传模块-->
+	<bean id="userHeadImgDao" class="com.community.dao.UserHeadImgDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="userHeadImgService" class="com.community.service.impl.UserHeadImgServiceImpl">
+		<property name="userHeadImgDao" ref="userHeadImgDao"/>
+	</bean>
+	<bean id="userHeadImgAction" class="com.community.web.UserHeadImgAction">
+		<property name="userHeadImgService" ref="userHeadImgService"/>
+	</bean>
+	<!--  订单模块-->
+	<bean id="orderDao" class="com.community.dao.OrderDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="orderService" class="com.community.service.impl.OrderServiceImpl">
+		<property name="orderDao" ref="orderDao"/>
+	</bean>
+	<bean id="orderAction" class="com.community.web.OrderAction">
+		<property name="orderService" ref="orderService"/>
+	</bean>
+	<!-- 积分模块 -->
+	<bean id="scoreDao" class="com.community.dao.ScoreDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="scoreService" class="com.community.service.impl.ScoreServiceImpl">
+		<property name="scoreDao" ref="scoreDao"/>
+	</bean>
+	<bean id="scoreAction" class="com.community.web.ScoreAction">
+		<property name="scoreService" ref="scoreService"/>
+	</bean>
+	<!-- 认证模块 -->
+	<bean id="authDao" class="com.community.dao.AuthDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="authService" class="com.community.service.impl.AuthServiceImpl">
+		<property name="authDao" ref="authDao"/>
+	</bean>
+	<bean id="authAction" class="com.community.web.AuthAction">
+		<property name="authService" ref="authService"></property>
+	</bean>
+	<!-- 缴费模块 -->
+	<bean id="payDao" class="com.community.dao.PayDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="payService" class="com.community.service.impl.PayServiceImpl">
+		<property name="payDao" ref="payDao"></property>
+	</bean>
+	<bean id="payAction" class="com.community.web.PayAction">
+		<property name="payService" ref="payService"></property>
+	</bean>
+	<!-- 缴费订单模块 -->
+	<bean id="payItemDao" class="com.community.dao.PayItemDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="payItemService" class="com.community.service.impl.PayItemServiceImpl">
+		<property name="payItemDao" ref="payItemDao"></property>
+	</bean>
+	<bean id="payItemAction" class="com.community.web.PayItemAction">
+		<property name="payItemService" ref="payItemService"></property>
+	</bean>
+	<!-- 测试数据模块 -->
+	<bean id="testDao" class="com.community.dao.TestDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="testService" class="com.community.service.impl.TestServiceImpl">
+		<property name="testDao" ref="testDao"/>
+	</bean>
+	
+	
+	<!--开启事务  -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>

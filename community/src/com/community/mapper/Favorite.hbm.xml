@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.Favorite" table="tbl_favorite">
+		<id name="fid" column="fid">
+			<generator class="uuid"/>
+		</id>
+		<set name="favorites" table="tbl_favorite_item">
+			<key column="fid"></key>
+			<one-to-many class="com.community.domain.FavoriteItem"/>
+		</set>
+		<many-to-one name="user" class="com.community.domain.User" column="uid"/>
+	</class>
+</hibernate-mapping>

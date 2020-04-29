@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.SS" table="tbl_ss">
+		<id name="sid" column="sid">
+			<generator class="uuid"/>
+		</id>
+		<property name="ssContent" column="ss_content"/>
+		<property name="time" column="ss_time"/>
+		<many-to-one name="user" column="uid" class="com.community.domain.User"/>
+		<set name="ssImgs">
+			<key column="ss_sid"/>
+			<one-to-many class="com.community.domain.SSImg"/>
+		</set>
+	</class>
+</hibernate-mapping>

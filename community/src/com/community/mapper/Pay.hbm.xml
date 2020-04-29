@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.Pay" table="tbl_pay">
+		<id name="pid" column="pid">
+			<generator class="uuid"/>
+		</id>
+		<property name="type" column="type"/>
+		<property name="commitDate" column="commit_date"/>
+		<property name="money" column="money"/>
+		<property name="startDate" column="start_date"/>
+		<property name="endDate" column="end_date"/>
+		<property name="detail" column="detail"/>
+	</class>
+</hibernate-mapping>

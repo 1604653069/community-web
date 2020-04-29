@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.House" table="tbl_house">
+		<id name="hid" column="hid">
+			<generator class="uuid"/>
+		</id>
+		<property name="address"/>
+		<property name="detailed"/>
+		<property name="date"/>
+		<property name="area"/>
+		<property name="rent"/>
+		<property name="title"/>
+		<property name="type"/>
+		<set name="houseImgs" table="tbl_house_img">
+			<key column="hid"></key>
+			<one-to-many class="com.community.domain.HouseImg"/>
+		</set>
+	</class>
+</hibernate-mapping>

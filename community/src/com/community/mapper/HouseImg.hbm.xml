@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.HouseImg" table="tbl_house_img">
+		<id name="iid" column="iid">
+			<generator class="uuid"/>
+		</id>
+		<property name="path"/>
+		<many-to-one name="house" class="com.community.domain.House" column="hid"/>
+	</class>
+</hibernate-mapping>

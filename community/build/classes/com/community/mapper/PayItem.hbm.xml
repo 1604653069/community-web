@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.PayItem" table="tbl_pay_item">
+		<id name="iid" column="iid">
+			<generator class="uuid"/>
+		</id>
+		<property name="date" column="date"/>
+		<property name="money" column="money"/>
+		<property name="state" column="state"/>
+		<many-to-one name="user" class="com.community.domain.User" column="uid"/>
+		<many-to-one name="pay" class="com.community.domain.Pay" column="pid"/>
+	</class>
+</hibernate-mapping>

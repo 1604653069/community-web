@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.RepairPhoto" table="tbl_repair_pho">
+		<id name="pid" column="pid">
+			<generator class="uuid"/>
+		</id>
+		<property name="path"/>
+		<many-to-one name="repair" class="com.community.domain.Repair" column="rid">
+		</many-to-one>
+	</class>
+</hibernate-mapping>

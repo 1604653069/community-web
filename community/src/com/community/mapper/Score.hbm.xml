@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.Score" table="tbl_score">
+		<id name="sid" column="sid">
+			<generator class="uuid"/>
+		</id>
+		<property name="score" column="score"/>
+		<many-to-one name="user" class="com.community.domain.User" column="uid"/>
+	</class>
+</hibernate-mapping>

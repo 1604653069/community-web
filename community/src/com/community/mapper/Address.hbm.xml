@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.Address" table="tbl_address">
+		<id name="aid" column="aid">
+			<generator class="uuid"/>
+		</id>
+		<property name="name" column="name"></property>
+		<property name="statues" column="statues"></property>
+		<property name="phone" column="phone"></property>
+		<property name="address" column="address"></property>
+		<many-to-one name="user" class="com.community.domain.User" column="uid"/>
+	</class>
+</hibernate-mapping>

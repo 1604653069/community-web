@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 配置Struts2的常量 -->
+	<constant name="struts.action.extension" value="action"/>
+	<!-- 临时存储文件 -->
+	<constant name="struts.multipart.saveDir" value="/tmp"/>
+	<!-- 设置文件上传大小的限制 为5m-->
+	<constant name="struts.multipart.maxSize" value="5242880" />
+	<include file="com/community/web/user.xml"/>
+	<include file="com/community/web/placard.xml"/>
+	<include file="com/community/web/upload.xml"/>
+	<include file="com/community/web/Repair.xml"/>
+	<include file="com/community/web/test.xml"/>
+	<include file="com/community/web/ss.xml"/>
+	<include file="com/community/web/product.xml"/>
+	<include file="com/community/web/cart.xml"/>
+	<include file="com/community/web/house.xml"/>
+	<include file="com/community/web/address.xml"/>
+	<include file="com/community/web/favorite.xml"/>
+	<include file="com/community/web/wallet.xml"/>
+	<include file="com/community/web/history.xml"/>
+	<include file="com/community/web/userHead.xml"/>
+	<include file="com/community/web/order.xml"/>
+	<include file="com/community/web/score.xml"/>
+	<include file="com/community/web/auth.xml"/>
+	<include file="com/community/web/pay.xml"/>
+	<include file="com/community/web/payitem.xml"/>
+</struts>

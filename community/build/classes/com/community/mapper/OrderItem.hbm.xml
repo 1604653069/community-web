@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.OrderItem" table="tbl_order_item">
+		<id name="iid" column="iid">
+			<generator class="uuid"/>
+		</id>
+		<property name="count" column="count" />
+		<many-to-one name="order" class="com.community.domain.Order" column="oid" />
+		<many-to-one name="product" class="com.community.domain.Product" column="pid"/>
+	</class>
+</hibernate-mapping>

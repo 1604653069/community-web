@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.community.domain.CartItem" table="tbl_cart_item">
+		<id name="iid" column="iid">
+			<generator class="uuid"/>
+		</id>
+		<property name="quantity" column="quantity"></property>
+		<property name="total" column="total"></property>
+		<many-to-one name="product" class="com.community.domain.Product" column="pid" unique="true"></many-to-one>
+		<many-to-one name="cart" class="com.community.domain.Cart" column="cid"></many-to-one>
+	</class>
+</hibernate-mapping>
